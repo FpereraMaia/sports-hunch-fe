@@ -1,8 +1,8 @@
 import { Box, Button, Container, createTheme, CssBaseline, Grid, List, ListItem, ListItemText, Tab, TextField, ThemeProvider } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import TeamsService from "../services/Teams.service";
-import Column from "./Components/Column";
+import TeamsService from "../../services/Teams.service";
+import Column from "../Components/Column";
 
 const SPORTS_HUNCH_API_URL: string = (process.env.SPORTS_HUNCH_API_URL ? process.env.SPORTS_HUNCH_API_URL : "");
 
@@ -58,6 +58,7 @@ export default function Index({ teams }: any) {
       result.source.index,
       result.destination.index
     );
+
 
     setTasks({
       tasks: tasks
@@ -127,17 +128,18 @@ export default function Index({ teams }: any) {
                 </DragDropContext>
               </Grid>
             </Grid>
-            <Button
+
+          </Box>
+
+        </Box>
+        {/* <Button
                   type="submit"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   >
               Cadastrar Aposta
-            </Button>
-          </Box>
-        </Box>
-
+            </Button> */}
       </Container>
     </ThemeProvider>
   );

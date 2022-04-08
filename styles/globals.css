@@ -14,3 +14,21 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.container-team-bet {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.container-team-bet ul {
+  list-style-type: none;
+}
+
+.container-team-bet ul li {
+  margin-top: 7px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #266fc5;
+}
