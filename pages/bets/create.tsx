@@ -261,7 +261,7 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
                       required
                       fullWidth
                       id="email"
-                      label="Endereço de e-mail"
+                      label="E-mail"
                       name="email"
                       autoComplete="email"
                       size="small"
