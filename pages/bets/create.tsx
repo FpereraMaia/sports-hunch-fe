@@ -14,6 +14,7 @@ import TeamsService from '../../services/Teams.service';
 import { Card, CardContent, List, ListItem, ListItemText, Modal } from '@mui/material';
 import BetsService from '../../services/Bets.service';
 import Task from '../Components/Task';
+import mockedTeamsResponse from '../../mocks/mockedTeamsResponse';
 
 
 function Copyright(props: any) {
@@ -34,13 +35,13 @@ export async function getStaticProps() {
   let teams;
   const SPORTS_HUNCH_API_URL: string = (process.env.SPORTS_HUNCH_API_URL ? process.env.SPORTS_HUNCH_API_URL : "");
 
-  const teamService = new TeamsService(SPORTS_HUNCH_API_URL);
-  await teamService.getAll().then(({data}:any) => {
-    teams = data.results;
-  }).catch((error: any) => {
-    throw error;
-  })
-
+  // const teamService = new TeamsService(SPORTS_HUNCH_API_URL);
+  // await teamService.getAll().then(({data}:any) => {
+  //   teams = data.results;
+  // }).catch((error: any) => {
+  //   throw error;
+  // })
+  teams = mockedTeamsResponse.results;
   return {
     props: {
       teams,
@@ -315,7 +316,7 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Obrigado pela sua aposta, ela foi salva com sucesso. <b>Em breve lançaremos a página de acompanhamento de pontos.</b>
             <br/>
-            Sua aposta está abaixo, e seu Código da aposta é: <b>#{("0000" + betCode).slice(-4)}</b>
+            Sua aposta está abaixo, e seu Código da aposta: <b>#{("0000" + betCode).slice(-4)}</b>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           {savedTeamList.map((val: any, index: any) => {
