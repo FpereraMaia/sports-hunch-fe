@@ -9,11 +9,11 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { DragDropContext } from 'react-beautiful-dnd';
-import Column from '../Components/Column';
+import Column from '../../Components/Column';
 import TeamsService from '../../services/Teams.service';
 import { Card, CardContent, List, ListItem, ListItemText, Modal } from '@mui/material';
 import BetsService from '../../services/Bets.service';
-import Task from '../Components/Task';
+import Task from '../../Components/Task';
 import mockedTeamsResponse from '../../mocks/mockedTeamsResponse';
 
 
