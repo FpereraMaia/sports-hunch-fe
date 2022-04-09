@@ -4,7 +4,7 @@ const axios = require('axios').default;
 export default class Service {
   private client: typeof axios;
 
-  constructor(baseURL: string, headers?: any, timeout: number = 5000) {
+  constructor(baseURL: string, headers?: any, timeout: number = 60000) {
     this.client = axios.create({
       baseURL,
       headers,

@@ -14,7 +14,6 @@ import TeamsService from '../../services/Teams.service';
 import { Card, CardContent, List, ListItem, ListItemText, Modal } from '@mui/material';
 import BetsService from '../../services/Bets.service';
 import Task from '../../Components/Task';
-import mockedTeamsResponse from '../../mocks/mockedTeamsResponse';
 
 
 function Copyright(props: any) {
@@ -35,13 +34,14 @@ export async function getStaticProps() {
   let teams;
   const SPORTS_HUNCH_API_URL: string = (process.env.SPORTS_HUNCH_API_URL ? process.env.SPORTS_HUNCH_API_URL : "");
 
-  // const teamService = new TeamsService(SPORTS_HUNCH_API_URL);
-  // await teamService.getAll().then(({data}:any) => {
-  //   teams = data.results;
-  // }).catch((error: any) => {
-  //   throw error;
-  // })
-  teams = mockedTeamsResponse.results;
+  const teamService = new TeamsService(SPORTS_HUNCH_API_URL);
+  await teamService.getAll().then(({data}:any) => {
+    teams = data;
+  }).catch((error: any) => {
+    console.log(error);
+    throw error;
+  })
+
   return {
     props: {
       teams,
@@ -79,7 +79,7 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
     const data = new FormData(event.currentTarget);
     const bet = {
       email: data.get('email'),
-      password: data.get('name'),
+      name: data.get('name'),
       teams: taskList.tasks
     };
 
