@@ -71,11 +71,14 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
 
   const [taskList, setTasks] = React.useState(initialState);
   const [open, setOpen] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
+
   const [savedTeamList, setSavedTeamList] = React.useState([]);
   const [betCode, setBetCode] = React.useState(false);
 
-  const handleOpen = () => setOpen(true);
+
   const handleClose = () => setOpen(false);
+  const handleCloseError = () => setOpenError(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -93,7 +96,10 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
       setOpen(true);
     }).catch((error: any) => {
       console.log("DEU ERRADO");
-      console.log(error);
+
+      if(error.response.status === 400) {
+        setOpenError(true);
+      }
     })
   };
 
@@ -340,6 +346,21 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
               <Task id={val.team_id.toString()} key={val.team_id.toString()} index={index} title={val.name} crest={val.crest} style={style} isNotDraggable={true} />
             );
           })}
+          </Typography>
+        </Box>
+      </Modal>
+
+
+      <Modal
+        open={openError}
+        onClose={handleCloseError}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        disableEscapeKeyDown
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            <b>Campos de nome ou e-mail sem preencher ou incorretos.</b>
           </Typography>
         </Box>
       </Modal>

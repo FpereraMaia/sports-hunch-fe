@@ -145,7 +145,7 @@ module.exports = [
             id: 'success',
             response: (req, res) => {
               req.body["id"] = 1;
-              res.status(200);
+              res.status(400);
               res.send(req.body);
             },
           },
