@@ -8,6 +8,11 @@ const nextConfig = {
         destination: '/bets/create',
         permanent: true,
       },
+      {
+        source: '/bets/create',
+        destination: '/bets/closed',
+        permanent: false,
+      },
     ]
   },
 }
