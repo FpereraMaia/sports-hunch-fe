@@ -360,7 +360,11 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            <b>Campos de nome ou e-mail sem preencher ou incorretos.</b>
+
+            <Alert severity="error" sx={{margin: '50px'}}>
+              Campos de nome ou e-mail sem preencher ou incorretos.
+            </Alert>
+
           </Typography>
         </Box>
       </Modal>
