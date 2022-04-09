@@ -6,6 +6,7 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -14,6 +15,7 @@ import TeamsService from '../../services/Teams.service';
 import { Card, CardContent, List, ListItem, ListItemText, Modal } from '@mui/material';
 import BetsService from '../../services/Bets.service';
 import Task from '../../Components/Task';
+import { Avatar } from "@mui/material";
 
 
 function Copyright(props: any) {
@@ -55,6 +57,7 @@ const theme = createTheme();
 export default function SignInSide({ teams, baseApiUrl }: any) {
   const betsService = new BetsService(baseApiUrl);
 
+  const [showComponents, setShowComponents] = React.useState(true);
   const [winReady, setwinReady] = React.useState(false);
 
   React.useEffect(() => {
@@ -84,6 +87,7 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
     };
 
     betsService.create(bet).then((response: any) => {
+      setShowComponents(false);
       setSavedTeamList(response.data.teams);
       setBetCode(response.data.id);
       setOpen(true);
@@ -230,81 +234,93 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
               </CardContent>
             </Card>
         </Grid>
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box component="form" noValidate onSubmit={handleSubmit}
-            sx={{
-              mx: 4,
-              marginTop: "2px",
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'stretch',
-            }}
-          >
+        {showComponents ?
+          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Box component="form" noValidate onSubmit={handleSubmit}
+              sx={{
+                mx: 4,
+                marginTop: "2px",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'stretch',
+              }}
+            >
 
-            <Box sx={{ margin: "2px auto", display: "flex", flexDirection: 'row' }}>
-              <Box sx={{ margin: "auto 20px" }}>
-                <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="name"
-                      label="Nome"
-                      name="name"
-                      autoComplete="name"
-                      size="small"
-                    />
-                  </Grid>
-                </Box>
-                <Box>
+              <Box sx={{ margin: "2px auto", display: "flex", flexDirection: 'row' }}>
+                <Box sx={{ margin: "auto 20px" }}>
                   <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="email"
-                      label="E-mail"
-                      name="email"
-                      autoComplete="email"
-                      size="small"
-                    />
-                  </Grid>
-                </Box>
-            </Box>
-            <Typography variant="overline" display="block" gutterBottom>
-              <b>Crie sua tabela arrastando os times para cima ou para baixo</b>
-            </Typography>
-            <Box>
-              <Grid item xs={12}>
-                <DragDropContext onDragEnd={onDragEnd}>
-
-                    {winReady ?
-                      <Column
-                        className="column"
-                        droppableId="Meu Palpite"
-                        list={taskList.tasks}
-                        type="TASK"
+                      <TextField
+                        required
+                        fullWidth
+                        id="name"
+                        label="Nome"
+                        name="name"
+                        autoComplete="name"
+                        size="small"
                       />
-                    : null}
+                    </Grid>
+                  </Box>
+                  <Box>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="email"
+                        label="E-mail"
+                        name="email"
+                        autoComplete="email"
+                        size="small"
+                      />
+                    </Grid>
+                  </Box>
+              </Box>
+              <Typography variant="overline" display="block" gutterBottom>
+                <b>Crie sua tabela arrastando os times para cima ou para baixo</b>
+              </Typography>
+              <Box>
+                <Grid item xs={12}>
+                  <DragDropContext onDragEnd={onDragEnd}>
 
-                </DragDropContext>
-              </Grid>
+                      {winReady ?
+                        <Column
+                          className="column"
+                          droppableId="Meu Palpite"
+                          list={taskList.tasks}
+                          type="TASK"
+                        />
+                      : null}
+
+                  </DragDropContext>
+                </Grid>
+              </Box>
+
+              {winReady && showComponents ?
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    >
+                Cadastrar Aposta
+              </Button>
+                : null}
+              <Copyright sx={{ mt: 5 }} />
+
             </Box>
 
-            {winReady ?
-                 <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  >
-              Cadastrar Aposta
-            </Button>
-              : null}
-            <Copyright sx={{ mt: 5 }} />
+          </Grid>
+          :
 
+          <Box sx={{margin: '150px auto'}}>
+            <Alert severity="success" sx={{margin: '50px'}}>Sua aposta foi cadastrada com sucesso. </Alert>
+
+            <Avatar sx={{ width: 400, height: 400 }} alt={'campeao 2021'} src={'/campeao-2021-turndown-for-what.jpg'} />
+            Um pequena homenagem ao grande campeão de 2021 Raphael Martins!
           </Box>
 
+          }
         </Grid>
-      </Grid>
+
       <Modal
         open={open}
         onClose={handleClose}

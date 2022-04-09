@@ -1,7 +1,4 @@
-const mockedTeamsResponse = {
-    filters: [
-    ],
-    results: [
+const mockedTeamsResponse =  [
         {
             "team_id": 33,
             "name": "América-MG",
@@ -122,22 +119,7 @@ const mockedTeamsResponse = {
             "abbreviation": "SAO",
             "crest": "https://apifutebol.s3.sa-east-1.amazonaws.com/escudos/5f999ccdc1656.svg"
         }
-    ],
-    available_filters: [
-    ],
-    available_sorts: [
-      {
-        id: 'name_asc',
-        name: 'Sort by name ascending',
-      },
-      {
-        id: 'name_desc',
-        name: 'Sort by name descending',
-      },
-    ],
-    sort_field: 'name',
-    sort_order: 'desc',
-  }
+    ];
 
 module.exports = [
     {
@@ -162,9 +144,9 @@ module.exports = [
           {
             id: 'success',
             response: (req, res) => {
-              req.body.data["id"] = 1;
+              req.body["id"] = 1;
               res.status(200);
-              res.send(req.body.data);
+              res.send(req.body);
             },
           },
         ],
