@@ -16,6 +16,8 @@ import { Card, CardContent, List, ListItem, ListItemText, Modal } from '@mui/mat
 import BetsService from '../../services/Bets.service';
 import Task from '../../Components/Task';
 import { Avatar } from "@mui/material";
+import Router from 'next/router';
+import Success from '../../Components/Success';
 
 
 function Copyright(props: any) {
@@ -77,6 +79,7 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
   const [betCode, setBetCode] = React.useState(false);
 
 
+
   const handleClose = () => setOpen(false);
   const handleCloseError = () => setOpenError(false);
 
@@ -94,6 +97,7 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
       setSavedTeamList(response.data.teams);
       setBetCode(response.data.id);
       setOpen(true);
+
     }).catch((error: any) => {
       console.log("DEU ERRADO");
 
@@ -154,6 +158,15 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
             backgroundPosition: 'center',
           }}
         >
+          {open ?
+          <Grid item xs={6} md={2}>
+
+
+
+          </Grid>
+
+          :
+          <Box>
             <Card sx={{ minWidth: 275 }}>
               <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -239,6 +252,11 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
                 </Typography>
               </CardContent>
             </Card>
+            </Box>
+          }
+
+
+
         </Grid>
         {showComponents ?
           <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -316,40 +334,11 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
 
           </Grid>
           :
-
-          <Box sx={{margin: '150px auto'}}>
-            <Alert severity="success" sx={{margin: '50px'}}>Sua aposta foi cadastrada com sucesso. </Alert>
-
-            <Avatar sx={{ width: 400, height: 400 }} alt={'campeao 2021'} src={'/campeao-2021-turndown-for-what.jpg'} />
-            Um pequena homenagem ao grande campeão de 2021 Raphael Martins!
-          </Box>
-
+          <Grid>
+            <Success teamList={savedTeamList} betCode={betCode}></Success>
+          </Grid>
           }
         </Grid>
-
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        disableEscapeKeyDown
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Obrigado pela sua aposta, ela foi salva com sucesso. <b>Em breve lançaremos a página de acompanhamento de pontos.</b>
-            <br/>
-            Sua aposta está abaixo, e seu Código da aposta: <b>#{("0000" + betCode).slice(-4)}</b>
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          {savedTeamList.map((val: any, index: any) => {
-            return (
-              <Task id={val.team_id.toString()} key={val.team_id.toString()} index={index} title={val.name} crest={val.crest} style={style} isNotDraggable={true} />
-            );
-          })}
-          </Typography>
-        </Box>
-      </Modal>
-
 
       <Modal
         open={openError}
