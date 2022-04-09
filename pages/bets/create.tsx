@@ -12,7 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from '../../Components/Column';
 import TeamsService from '../../services/Teams.service';
-import { Card, CardContent, List, ListItem, ListItemText, Modal } from '@mui/material';
+import { Card, CardContent, CircularProgress, List, ListItem, ListItemText, Modal } from '@mui/material';
 import BetsService from '../../services/Bets.service';
 import Task from '../../Components/Task';
 import { Avatar } from "@mui/material";
@@ -61,6 +61,8 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
 
   const [showComponents, setShowComponents] = React.useState(true);
   const [winReady, setwinReady] = React.useState(false);
+  const [showConfirmButton, setShowConfirmButton] = React.useState(true);
+
 
   React.useEffect(() => {
     setwinReady(true);
@@ -85,6 +87,7 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setShowConfirmButton(false);
     const data = new FormData(event.currentTarget);
     const bet = {
       email: data.get('email'),
@@ -99,6 +102,7 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
       setOpen(true);
 
     }).catch((error: any) => {
+      setShowConfirmButton(true);
       console.log("DEU ERRADO");
 
       if(error.response.status === 400) {
@@ -318,16 +322,20 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
                 </Grid>
               </Box>
 
-              {winReady && showComponents ?
+              {winReady && showConfirmButton ?
                 <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    >
-                Cadastrar Aposta
-              </Button>
-                : null}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  >
+                  Cadastrar Aposta
+                </Button>
+                :
+                <Box sx={{margin: '10px auto'}}>
+                  <CircularProgress />
+                </Box>
+              }
               <Copyright sx={{ mt: 5 }} />
 
             </Box>
