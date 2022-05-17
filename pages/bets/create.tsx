@@ -1,54 +1,12 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { DragDropContext } from 'react-beautiful-dnd';
-import Column from '../../Components/Column';
 import TeamsService from '../../services/Teams.service';
 import { Card, CardContent, CircularProgress, List, ListItem, ListItemText, Modal } from '@mui/material';
-import BetsService from '../../services/Bets.service';
 
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="#">
-        Sports Hunch
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-
-export async function getStaticProps() {
-  let teams;
-  const SPORTS_HUNCH_API_URL: string = (process.env.SPORTS_HUNCH_API_URL ? process.env.SPORTS_HUNCH_API_URL : "");
-
-  const teamService = new TeamsService(SPORTS_HUNCH_API_URL);
-  await teamService.getAll().then(({data}:any) => {
-    teams = data;
-  }).catch((error: any) => {
-    console.log(error);
-    throw error;
-  })
-
-  return {
-    props: {
-      teams,
-      baseApiUrl: SPORTS_HUNCH_API_URL
-    },
-  }
-}
 
 const theme = createTheme();
 
