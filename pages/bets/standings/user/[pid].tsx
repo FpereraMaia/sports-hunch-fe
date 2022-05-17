@@ -5,10 +5,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UsersService from '../../../../services/Users.service';
-import { Avatar, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Avatar, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import BetDetailsService from '../../../../services/BetDeailts.service';
-import Column from '../../../../Components/Column';
-import { Box } from '@mui/system';
 
 
 function Copyright(props: any) {
