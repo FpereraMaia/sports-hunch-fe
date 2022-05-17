@@ -16,6 +16,7 @@ import { Card, CardContent, CircularProgress, List, ListItem, ListItemText, Moda
 import BetsService from '../../services/Bets.service';
 import { Avatar } from "@mui/material";
 import Router from 'next/router';
+import Success from '../../components/Success';
 
 
 
