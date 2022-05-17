@@ -1,6 +1,6 @@
 [
   {
     "id": "base",
-    "routesVariants": ["get-teams:success", "post-bets:success"]
+    "routesVariants": ["get-teams:success", "post-bets:success", "get-users:success"]
   }
 ]

@@ -14,10 +14,9 @@ import Column from '../../Components/Column';
 import TeamsService from '../../services/Teams.service';
 import { Card, CardContent, CircularProgress, List, ListItem, ListItemText, Modal } from '@mui/material';
 import BetsService from '../../services/Bets.service';
-import Task from '../../Components/Task';
 import { Avatar } from "@mui/material";
 import Router from 'next/router';
-import Success from '../../Components/Success';
+
 
 
 function Copyright(props: any) {

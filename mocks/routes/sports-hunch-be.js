@@ -121,6 +121,128 @@ const mockedTeamsResponse =  [
         }
     ];
 
+const mockedUserResponse = [
+	{
+		"id" : 4,
+		"name" : "felipepqm@gmail.com",
+		"email" : "Felipe",
+		"created_at" : "2022-04-09 02:40:33.683174000",
+		"updated_at" : "2022-04-09 02:42:13.928268000"
+	},
+	{
+		"id" : 14,
+		"name" : "felipepqm@gmail.com",
+		"email" : "teste maia",
+		"created_at" : "2022-04-09 02:53:24.559117000",
+		"updated_at" : "2022-04-09 02:56:11.928329000"
+	},
+	{
+		"id" : 24,
+		"name" : "Perera",
+		"email" : "felipepqm@gmail.com",
+		"created_at" : "2022-04-09 03:01:37.220118000",
+		"updated_at" : "2022-04-09 03:13:44.600033000"
+	},
+	{
+		"id" : 34,
+		"name" : "Aaaa",
+		"email" : "teste@teste.com",
+		"created_at" : "2022-04-09 04:37:38.480318000",
+		"updated_at" : "2022-04-09 06:31:16.403277000"
+	},
+	{
+		"id" : 44,
+		"name" : "Hugo Leon",
+		"email" : "hugoleonruas@gmail.com",
+		"created_at" : "2022-04-09 04:59:12.307783000",
+		"updated_at" : "2022-04-09 04:59:12.307844000"
+	},
+	{
+		"id" : 54,
+		"name" : "Teste cel",
+		"email" : "Testecel@vish.com",
+		"created_at" : "2022-04-09 05:20:42.281697000",
+		"updated_at" : "2022-04-09 05:20:42.281735000"
+	},
+	{
+		"id" : 64,
+		"name" : "Teste",
+		"email" : "Aaaa@aaa.com",
+		"created_at" : "2022-04-09 06:16:05.888983000",
+		"updated_at" : "2022-04-09 06:16:05.889023000"
+	},
+	{
+		"id" : 74,
+		"name" : "Randolpho",
+		"email" : "ranrandolpho@hotmail.com",
+		"created_at" : "2022-04-09 10:32:45.820717000",
+		"updated_at" : "2022-04-09 10:32:45.820775000"
+	},
+	{
+		"id" : 84,
+		"name" : "Anderson",
+		"email" : "andersonzgabbardo@gmail.com",
+		"created_at" : "2022-04-09 10:44:18.018808000",
+		"updated_at" : "2022-04-09 10:44:18.018869000"
+	},
+	{
+		"id" : 94,
+		"name" : "Virgínia",
+		"email" : "vivibraga2010@gmail.com",
+		"created_at" : "2022-04-09 13:32:07.822777000",
+		"updated_at" : "2022-04-09 13:32:07.822819000"
+	},
+	{
+		"id" : 104,
+		"name" : "Mateus",
+		"email" : "mateusaugustosilva@outlook.com",
+		"created_at" : "2022-04-09 13:35:54.428781000",
+		"updated_at" : "2022-04-09 13:35:54.428842000"
+	},
+	{
+		"id" : 114,
+		"name" : "Raphael Martins",
+		"email" : "raphaelpmartins7@hotmail.com",
+		"created_at" : "2022-04-09 14:09:08.398619000",
+		"updated_at" : "2022-04-09 14:09:08.398678000"
+	},
+	{
+		"id" : 124,
+		"name" : "Yan Suzano",
+		"email" : "yan_suzano@outlook.com",
+		"created_at" : "2022-04-09 15:41:54.055339000",
+		"updated_at" : "2022-04-09 15:41:54.055390000"
+	},
+	{
+		"id" : 134,
+		"name" : "André Leopoldo",
+		"email" : "andreleo88@gmail.com",
+		"created_at" : "2022-04-09 15:57:13.220621000",
+		"updated_at" : "2022-04-09 15:57:13.220667000"
+	},
+	{
+		"id" : 144,
+		"name" : "Diego Suzano",
+		"email" : "diegosuzano@live.com",
+		"created_at" : "2022-04-09 17:42:53.180600000",
+		"updated_at" : "2022-04-09 17:42:53.180641000"
+	},
+	{
+		"id" : 154,
+		"name" : "Açucena",
+		"email" : "acucenadrv@gmail.com",
+		"created_at" : "2022-04-09 17:56:16.009878000",
+		"updated_at" : "2022-04-09 17:56:16.009922000"
+	},
+	{
+		"id" : 164,
+		"name" : "Hugo Haran Marinho",
+		"email" : "hugoharan@gmail.com",
+		"created_at" : "2022-04-09 18:22:46.208135000",
+		"updated_at" : "2022-04-09 18:22:46.208175000"
+	}
+];
+
 module.exports = [
     {
         id: 'get-teams',
@@ -147,6 +269,20 @@ module.exports = [
               req.body["id"] = 1;
               res.status(200);
               res.send(req.body);
+            },
+          },
+        ],
+      },
+      {
+        id: 'get-users',
+        url: '/api/users',
+        method: 'GET',
+        variants: [
+          {
+            id: 'success',
+            response: (req, res) => {
+              res.status(200);
+              res.send(mockedUserResponse);
             },
           },
         ],
