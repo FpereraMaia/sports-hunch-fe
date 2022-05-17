@@ -14,10 +14,6 @@ import Column from '../../Components/Column';
 import TeamsService from '../../services/Teams.service';
 import { Card, CardContent, CircularProgress, List, ListItem, ListItemText, Modal } from '@mui/material';
 import BetsService from '../../services/Bets.service';
-import { Avatar } from "@mui/material";
-import Router from 'next/router';
-import Success from '../../components/Success';
-
 
 
 function Copyright(props: any) {
@@ -343,7 +339,7 @@ export default function SignInSide({ teams, baseApiUrl }: any) {
           </Grid>
           :
           <Grid>
-            <Success teamList={savedTeamList} betCode={betCode}></Success>
+            {/* <Success teamList={savedTeamList} betCode={betCode}></Success> */}
           </Grid>
           }
         </Grid>
