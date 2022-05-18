@@ -78,7 +78,36 @@ export default function ListUsers({ users, currentStandings }: Props) {
       </Typography>
         <CssBaseline />
         <Grid container spacing={2}>
-          <Grid xs={8}>
+          <Grid xs={12} sm={12} md={4}>
+            <TableContainer component={Paper}>
+              <Table size="small" aria-label="a dense table" sx={{bgcolor: "#f0f0f0"}}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Nome</TableCell>
+                    <TableCell>Pontuação</TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {users.map((row: User) => (
+                    <TableRow
+                      key={row.name}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell>
+                        {row.name}
+                      </TableCell>
+                      <TableCell>{"BREVE"}</TableCell>
+                      <TableCell>
+                        <Link href={`/bets/standings/user/${row.id}`}>Ver aposta</Link>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            </Grid>
+          <Grid xs={12} sm={12} md={8} >
           <TableContainer component={Paper}>
               <Table size="small" aria-label="a dense table">
                 <TableHead>
@@ -121,35 +150,7 @@ export default function ListUsers({ users, currentStandings }: Props) {
               </Table>
             </TableContainer>
           </Grid>
-          <Grid xs={4}>
-            <TableContainer component={Paper}>
-              <Table size="small" aria-label="a dense table" sx={{bgcolor: "#f0f0f0"}}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Nome</TableCell>
-                    <TableCell>Pontuação</TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {users.map((row: User) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                      <TableCell>
-                        {row.name}
-                      </TableCell>
-                      <TableCell>{"BREVE"}</TableCell>
-                      <TableCell>
-                        <Link href={`/bets/standings/user/${row.id}`}>Ver aposta</Link>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            </Grid>
+
         </Grid>
 
         <Copyright sx={{ mt: 5 }} />
