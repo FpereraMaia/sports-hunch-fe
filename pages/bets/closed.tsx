@@ -1,11 +1,9 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import UsersService from '../../services/Users.service';
 import { Accordion, AccordionDetails, AccordionSummary, Grid, List, ListItem, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import StandingsService from '../../services/Standings.service';
 import BetsService from '../../services/Bets.service';
@@ -80,7 +78,7 @@ export default function ListUsers({ ranking, currentStandings }: Props) {
       </Typography>
         <CssBaseline />
         <Grid container spacing={2}>
-          <Grid xs={12} sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={4}>
            <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -90,7 +88,7 @@ export default function ListUsers({ ranking, currentStandings }: Props) {
                 <Typography>Regras da pontuação</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>
+
                 <List>
                   <ListItem disablePadding>
                       <ListItemText>- Acertou posição exata na tabela: <b>25 pontos</b></ListItemText>
@@ -108,7 +106,7 @@ export default function ListUsers({ ranking, currentStandings }: Props) {
                       <ListItemText>- Colocou o time entre a 7ª e 12ª posições: <b>2 pontos</b></ListItemText>
                   </ListItem>
                 </List>
-                </Typography>
+
               </AccordionDetails>
             </Accordion>
             <TableContainer component={Paper}>
@@ -139,7 +137,7 @@ export default function ListUsers({ ranking, currentStandings }: Props) {
               </Table>
             </TableContainer>
           </Grid>
-          <Grid xs={12} sm={12} md={8} >
+          <Grid item xs={12} sm={12} md={8} >
           <TableContainer component={Paper}>
               <Table size="small" aria-label="a dense table">
                 <TableHead>

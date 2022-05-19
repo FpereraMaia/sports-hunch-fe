@@ -5,8 +5,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UsersService from '../../../../services/Users.service';
-import { Avatar, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+import { Avatar, Box, Button, Card, CardActions, CardContent, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import BetDetailsService from '../../../../services/BetDeailts.service';
+import BetsService from '../../../../services/Bets.service';
 
 
 function Copyright(props: any) {
@@ -40,6 +41,7 @@ interface Standing {
 export async function getServerSideProps(context: any) {
   let standings;
   let user;
+  let total_points;
   const SPORTS_HUNCH_API_URL: string = (process.env.SPORTS_HUNCH_API_URL ? process.env.SPORTS_HUNCH_API_URL : "");
 
   const { pid } = context.query;
@@ -52,9 +54,10 @@ export async function getServerSideProps(context: any) {
     throw error;
   })
 
-  const userService = new UsersService(SPORTS_HUNCH_API_URL);
-  await userService.getById(pid).then(({data}: any) => {
-    user = data;
+  const betService = new BetsService(SPORTS_HUNCH_API_URL);
+  await betService.getRankingByUser(pid).then(({data}: any) => {
+    user = data.user;
+    total_points = data.total_points;
   }).catch((error: any) => {
     console.log(error);
     throw error;
@@ -62,6 +65,7 @@ export async function getServerSideProps(context: any) {
 
   return {
     props: {
+      total_points,
       user,
       standings,
       baseApiUrl: SPORTS_HUNCH_API_URL
@@ -74,11 +78,11 @@ const theme = createTheme();
 interface Props {
   standings: Standing[],
   baseApiUrl?: string,
-  user: any
+  user: any,
+  total_points: number
 }
 
-export default function ListUsers({ standings, user }: Props) {
-  const teams = standings.map(standing => standing.team);
+export default function ListUsers({ standings, user, total_points }: Props) {
 
   return (
     <ThemeProvider theme={theme}>
@@ -89,8 +93,23 @@ export default function ListUsers({ standings, user }: Props) {
         </Typography>
         <CssBaseline />
         <Grid container>
+          <Grid item xs={12} sx={{marginBottom: "5px"}}>
+            <Grid item md={4}>
+            <Card sx={{ minWidth: 275 }}>
+              <CardContent>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                  Pontuação atual
+                </Typography>
+                <Typography variant="h5" component="div">
+                  {total_points}
+                </Typography>
+              </CardContent>
+            </Card>
+            </Grid>
 
-          <Grid>
+          </Grid>
+
+          <Grid item>
           <TableContainer component={Paper}>
             <Table size="small" aria-label="a dense table">
               <TableBody>

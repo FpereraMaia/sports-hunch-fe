@@ -15,4 +15,12 @@ export default class BetsService extends Service {
       `/api/ranking/current/`,
     );
   }
+
+  getRankingByUser(userId: number) {
+    return this.get(
+      `/api/bets/details/user/ranking/${userId}/`,
+    );
+  }
+
+
 }
