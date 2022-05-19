@@ -83,47 +83,49 @@ export default function ListUsers({ standings, user }: Props) {
   return (
     <ThemeProvider theme={theme}>
       <Container>
-      <Typography variant="h3" component="div" gutterBottom>
-        {user.name}
-      </Typography>
+        <Link href={`/`}>Página Inicial</Link>
+        <Typography variant="h3" component="div" gutterBottom>
+          {user.name}
+        </Typography>
         <CssBaseline />
-        <Grid xs={6}>
+        <Grid container>
 
-
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 300 }} size="small" aria-label="a dense table">
-            <TableBody>
-              {standings.map((row: Standing) => (
-                <TableRow
-                  key={row.position}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      backgroundColor: "white",
-                      padding: "5px",
-                      margin: "2px"
-                    }}
+          <Grid>
+          <TableContainer component={Paper}>
+            <Table size="small" aria-label="a dense table">
+              <TableBody>
+                {standings.map((row: Standing) => (
+                  <TableRow
+                    key={row.position}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                  {row.position}º
+                    <TableCell component="th" scope="row" sx={{padding: "0px"}}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        backgroundColor: "white",
+                        padding: "5px",
+                        margin: "2px"
+                      }}
+                    >
+                    {row.position}º
 
-                  <Avatar sx={{ width: 24, height: 24 }} alt={row.team.name} src={row.team.crest} />
+                    <Avatar sx={{ width: 24, height: 24 }} alt={row.team.name} src={row.team.crest} />
 
-                  <div>
-                    {row.team.name}
-                  </div>
+                    <div>
+                      {row.team.name}
+                    </div>
 
-                  </Box>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                    </Box>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          </Grid>
         </Grid>
 
         <Copyright sx={{ mt: 5 }} />

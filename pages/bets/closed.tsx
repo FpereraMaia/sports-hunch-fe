@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UsersService from '../../services/Users.service';
 import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import StandingsService from '../../services/Standings.service';
+import BetsService from '../../services/Bets.service';
 
 function Copyright(props: any) {
   return (
@@ -31,13 +32,13 @@ interface User {
 }
 
 export async function getServerSideProps() {
-  let users;
+  let ranking;
   let currentStandings;
   const SPORTS_HUNCH_API_URL: string = (process.env.SPORTS_HUNCH_API_URL ? process.env.SPORTS_HUNCH_API_URL : "");
 
-  const userService = new UsersService(SPORTS_HUNCH_API_URL);
-  await userService.getAll().then(({data}:any) => {
-    users = data;
+  const betService = new BetsService(SPORTS_HUNCH_API_URL);
+  await betService.getCurrentRanking().then(({data}:any) => {
+    ranking = data;
   }).catch((error: any) => {
     console.log(error);
     throw error;
@@ -54,7 +55,7 @@ export async function getServerSideProps() {
   return {
     props: {
       currentStandings,
-      users,
+      ranking,
       baseApiUrl: SPORTS_HUNCH_API_URL
     },
   }
@@ -63,12 +64,12 @@ export async function getServerSideProps() {
 const theme = createTheme();
 
 interface Props {
-  users: User[],
+  ranking: any,
   currentStandings: any,
   baseApiUrl?: string
 }
 
-export default function ListUsers({ users, currentStandings }: Props) {
+export default function ListUsers({ ranking, currentStandings }: Props) {
 
   return (
     <ThemeProvider theme={theme}>
@@ -89,17 +90,17 @@ export default function ListUsers({ users, currentStandings }: Props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {users.map((row: User) => (
+                  {ranking.map((row: any) => (
                     <TableRow
-                      key={row.name}
+                      key={row.user.name}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <TableCell>
-                        {row.name}
+                        {row.user.name}
                       </TableCell>
-                      <TableCell>{"BREVE"}</TableCell>
+                      <TableCell>{row.total_points}</TableCell>
                       <TableCell>
-                        <Link href={`/bets/standings/user/${row.id}`}>Ver aposta</Link>
+                        <Link href={`/bets/standings/user/${row.user.id}`}>Ver aposta</Link>
                       </TableCell>
                     </TableRow>
                   ))}
