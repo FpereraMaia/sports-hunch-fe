@@ -6,9 +6,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UsersService from '../../services/Users.service';
-import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Grid, List, ListItem, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import StandingsService from '../../services/Standings.service';
 import BetsService from '../../services/Bets.service';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function Copyright(props: any) {
   return (
@@ -80,6 +81,36 @@ export default function ListUsers({ ranking, currentStandings }: Props) {
         <CssBaseline />
         <Grid container spacing={2}>
           <Grid xs={12} sm={12} md={4}>
+           <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Regras da pontuação</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                <List>
+                  <ListItem disablePadding>
+                      <ListItemText>- Acertou posição exata na tabela: <b>25 pontos</b></ListItemText>
+                  </ListItem>
+                  <ListItem disablePadding>
+                      <ListItemText>- Acertou posição próxima <b>(Uma acima ou abaixo da apostada)</b> na tabela: <b>10 pontos</b></ListItemText>
+                  </ListItem>
+                  <ListItem disablePadding>
+                      <ListItemText>- Colocou o time no G6: <b>6 pontos</b></ListItemText>
+                  </ListItem>
+                  <ListItem disablePadding>
+                      <ListItemText>- Colocou o time no Z4: <b>6 pontos</b></ListItemText>
+                  </ListItem>
+                  <ListItem disablePadding>
+                      <ListItemText>- Colocou o time entre a 7ª e 12ª posições: <b>2 pontos</b></ListItemText>
+                  </ListItem>
+                </List>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
             <TableContainer component={Paper}>
               <Table size="small" aria-label="a dense table" sx={{bgcolor: "#f0f0f0"}}>
                 <TableHead>
@@ -107,7 +138,7 @@ export default function ListUsers({ ranking, currentStandings }: Props) {
                 </TableBody>
               </Table>
             </TableContainer>
-            </Grid>
+          </Grid>
           <Grid xs={12} sm={12} md={8} >
           <TableContainer component={Paper}>
               <Table size="small" aria-label="a dense table">
