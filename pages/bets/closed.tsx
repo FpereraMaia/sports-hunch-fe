@@ -31,8 +31,8 @@ interface User {
 }
 
 export async function getServerSideProps() {
-  let ranking;
-  let currentStandings;
+  let ranking = {};
+  let currentStandings = {};
   const SPORTS_HUNCH_API_URL: string = (process.env.SPORTS_HUNCH_API_URL ? process.env.SPORTS_HUNCH_API_URL : "");
 
   const betService = new BetsService(SPORTS_HUNCH_API_URL);
@@ -121,15 +121,15 @@ export default function ListUsers({ ranking, currentStandings }: Props) {
                 <TableBody>
                   {ranking.map((row: any) => (
                     <TableRow
-                      key={row.user.name}
+                      key={row.user_name}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <TableCell>
-                        {row.user.name}
+                        {row.user_name}
                       </TableCell>
                       <TableCell>{row.total_points}</TableCell>
                       <TableCell>
-                        <Link href={`/bets/standings/user/${row.user.id}`}>Ver aposta</Link>
+                        <Link href={`/bets/standings/user/${row.user_id}`}>Ver aposta</Link>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -162,7 +162,7 @@ export default function ListUsers({ ranking, currentStandings }: Props) {
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <TableCell>
-                        {row.position} {row.team.name}
+                        {row.position} {row.team_name}
                       </TableCell>
                       <TableCell>{row.points}</TableCell>
                       <TableCell> {row.games} </TableCell>

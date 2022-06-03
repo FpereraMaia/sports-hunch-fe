@@ -12,7 +12,7 @@ export default class BetsService extends Service {
 
   getCurrentRanking() {
     return this.get(
-      `/api/ranking/current/`,
+      `/v1/bet/ranking/current/`,
     );
   }
 
