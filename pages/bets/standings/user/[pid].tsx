@@ -4,7 +4,6 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import UsersService from '../../../../services/Users.service';
 import { Avatar, Box, Button, Card, CardActions, CardContent, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import BetDetailsService from '../../../../services/BetDeailts.service';
 import BetsService from '../../../../services/Bets.service';
@@ -23,19 +22,11 @@ function Copyright(props: any) {
   );
 }
 
-interface Team {
-  team_id: number;
-  name: string;
-  abbreviation: string;
-  crest: string;
-  created_at: string;
-  updated_at: string;
-}
-
 interface Standing {
   id: number;
   position: string;
-  team: Team;
+  team_name: string;
+  team_crest: string;
 }
 
 export async function getServerSideProps(context: any) {
@@ -56,7 +47,7 @@ export async function getServerSideProps(context: any) {
 
   const betService = new BetsService(SPORTS_HUNCH_API_URL);
   await betService.getRankingByUser(pid).then(({data}: any) => {
-    user = data.user;
+    user = {name: data.user_name};
     total_points = data.total_points;
   }).catch((error: any) => {
     console.log(error);
@@ -131,10 +122,10 @@ export default function ListUsers({ standings, user, total_points }: Props) {
                     >
                     {row.position}º
 
-                    <Avatar sx={{ width: 24, height: 24 }} alt={row.team.name} src={row.team.crest} />
+                    <Avatar sx={{ width: 24, height: 24 }} alt={row.team_name} src={row.team_crest} />
 
                     <div>
-                      {row.team.name}
+                      {row.team_name}
                     </div>
 
                     </Box>

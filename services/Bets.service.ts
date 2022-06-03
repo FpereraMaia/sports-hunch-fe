@@ -18,7 +18,7 @@ export default class BetsService extends Service {
 
   getRankingByUser(userId: number) {
     return this.get(
-      `/api/bets/details/user/ranking/${userId}/`,
+      `/v1/bet/details/ranking/user/${userId}/`,
     );
   }
 
