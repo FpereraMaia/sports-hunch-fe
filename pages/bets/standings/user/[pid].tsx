@@ -39,20 +39,13 @@ export async function getServerSideProps(context: any) {
 
   const betDetailsService = new BetDetailsService(SPORTS_HUNCH_API_URL);
   await betDetailsService.getBetStandingsByUser(pid).then(({data}:any) => {
-    standings = data;
+    standings = data.bet_standings;
+    total_points = data.total_points;
+    user = {name: data.user_name}
   }).catch((error: any) => {
     console.log(error);
     throw error;
   })
-
-  const betService = new BetsService(SPORTS_HUNCH_API_URL);
-  await betService.getRankingByUser(pid).then(({data}: any) => {
-    user = {name: data.user_name};
-    total_points = data.total_points;
-  }).catch((error: any) => {
-    console.log(error);
-    throw error;
-  });
 
   return {
     props: {
