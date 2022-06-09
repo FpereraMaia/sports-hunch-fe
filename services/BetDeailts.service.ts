@@ -8,6 +8,10 @@ export default class BetDetailsService extends Service {
   }
 
   getRankingHistoryByUser(userId: number) {
-    return this.get(`/v1/bet/ranking/history/${userId}`)
+    return this.get(`/v1/bet/ranking/history/${userId}`);
+  }
+
+  getRankingHistory() {
+    return this.get(`/v1/bet/ranking/history/`);
   }
 }

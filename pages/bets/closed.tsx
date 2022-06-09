@@ -1,13 +1,16 @@
 import * as React from 'react';
+import ReactEcharts from "echarts-for-react"; 
 import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Accordion, AccordionDetails, AccordionSummary, Grid, List, ListItem, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, CardContent, Grid, List, ListItem, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import StandingsService from '../../services/Standings.service';
 import BetsService from '../../services/Bets.service';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import BetDetailsService from '../../services/BetDeailts.service';
+import moment from 'moment';
 
 function Copyright(props: any) {
   return (
@@ -22,17 +25,11 @@ function Copyright(props: any) {
   );
 }
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  created_at: string;
-  updated_at: string;
-}
-
 export async function getServerSideProps() {
   let ranking = {};
   let currentStandings = {};
+  let history = {};
+
   const SPORTS_HUNCH_API_URL: string = (process.env.SPORTS_HUNCH_API_URL ? process.env.SPORTS_HUNCH_API_URL : "");
 
   const betService = new BetsService(SPORTS_HUNCH_API_URL);
@@ -51,11 +48,17 @@ export async function getServerSideProps() {
     throw error;
   });
 
+  const betDetailsService = new BetDetailsService(SPORTS_HUNCH_API_URL);
+  await betDetailsService.getRankingHistory().then(({data}: any) => {
+    history = data;
+  }); 
+
   return {
     props: {
       currentStandings,
       ranking,
-      baseApiUrl: SPORTS_HUNCH_API_URL
+      baseApiUrl: SPORTS_HUNCH_API_URL,
+      history
     },
   }
 }
@@ -66,9 +69,49 @@ interface Props {
   ranking: any,
   currentStandings: any,
   baseApiUrl?: string
+  history: any;
 }
 
-export default function ListUsers({ ranking, currentStandings }: Props) {
+export default function ListUsers({ ranking, currentStandings, history }: Props) {
+  function formatDate(date: moment.MomentInput) {
+    return moment(date).format("DD/MM");
+  }
+
+  const createdDates = Object.keys(history);
+  const xAxis = createdDates.map(created_date => formatDate(created_date))
+  
+  let series: any[] = [];
+
+  createdDates.forEach(date => {
+    const ranking = history[date];
+    let position = 1;
+    ranking.forEach((rankingData: any) => {
+      let filteredSerie = series.find(serie => serie.id === rankingData.user_id);
+      
+      if(!filteredSerie) {
+        series.push({id: rankingData.user_id, name: rankingData.user_name, type: "line", data: [rankingData.total_points]});
+      }
+      else {
+        filteredSerie.data.push(rankingData.total_points)
+      }
+    });
+  });
+  
+  const option = {
+    tooltip: {
+      trigger: 'axis',
+      order: "valueDesc"
+    },
+    xAxis: {
+      type: 'category',
+      data: xAxis
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series
+  }; 
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -136,6 +179,19 @@ export default function ListUsers({ ranking, currentStandings }: Props) {
                 </TableBody>
               </Table>
             </TableContainer>
+            
+            <CardContent>
+              <Typography sx={{ fontSize: 14 }} color="text.secondary" >
+                Evolução do Ranking 
+              </Typography>
+              <Typography sx={{ fontSize: 12 }} color="text.secondary" >
+                (Passe o mouse por cima do gráfico)
+              </Typography>
+              <Typography variant="h5" component="div">
+                <ReactEcharts option={option} />
+              </Typography>
+            </CardContent>
+
           </Grid>
           <Grid item xs={12} sm={12} md={8} >
           <TableContainer component={Paper}>
