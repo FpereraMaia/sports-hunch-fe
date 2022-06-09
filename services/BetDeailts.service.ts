@@ -6,4 +6,8 @@ export default class BetDetailsService extends Service {
       `/v1/bet/details/user/${userId}`
     );
   }
+
+  getRankingHistoryByUser(userId: number) {
+    return this.get(`/v1/bet/ranking/history/${userId}`)
+  }
 }

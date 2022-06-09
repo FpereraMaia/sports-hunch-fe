@@ -21,6 +21,4 @@ export default class BetsService extends Service {
       `/v1/bet/details/ranking/user/${userId}/`,
     );
   }
-
-
 }
