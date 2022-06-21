@@ -1,6 +1,12 @@
 [
   {
     "id": "base",
-    "routesVariants": ["get-teams:success", "post-bets:success", "get-users:success"]
+    "routesVariants": [
+      "get-current-ranking:success",
+      "get-current-standings:success",
+      "get-ranking-history:success",
+      "get-bet-details:success",
+      "get-ranking-history-by-user:success"
+    ]
   }
 ]
